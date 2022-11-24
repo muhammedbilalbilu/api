@@ -1,36 +1,39 @@
 import 'package:api_le/Api.dart';
-import 'package:api_le/page2.dart';
-import 'package:api_le/post.dart';
 import 'package:flutter/material.dart';
 
-class Pade extends StatefulWidget {
-  const Pade({super.key});
+import 'Apidata.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<Pade> createState() => _PadeState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _PadeState extends State<Pade> {
-  void ontAp() {
-    Navigator.of(context).pushNamed('/page2');
-  }
-
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //  6 call FutureBuilder
       body: FutureBuilder(
         builder: (context, AsyncSnapshot snapshot) {
+          //  7 check contusion
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            List<Entry> api = snapshot.data!;
+            // 8 check is it list or not  if it list call like this ( List<Welcome> api = snapshot.data!;)
+            //  if not call like (Welcome api = snapshot.data!;)
+            List<Welcome> api = snapshot.data!;
+            // 9 call Listview.builder
             return ListView.builder(
                 itemCount: api.length,
                 itemBuilder: ((context, index) {
                   return Center(
-                    child: Text(api[index].link),
+                    // 9 we called our json class ( Welcome ) here so we can access the details
+                    // like  ( name, symbol price)
+                    child: Text(api[index].currentPrice.toString()),
                   );
                 }));
           }
